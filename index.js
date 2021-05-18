@@ -41,7 +41,7 @@ app.post('/',express.json(),(req,res)=>{
         var dateTime = date + ", " + time;
         MyData.child('led1').push({
             'status':status,
-            'date':dateTime 
+            'time':dateTime 
         })
         if(value == 'bật' || value == 'tắt'){
             agent.add(`Đèn 1 đã ${value}`);
@@ -60,7 +60,7 @@ app.post('/',express.json(),(req,res)=>{
         var dateTime = date + ", " + time;
         MyData.child('led2').push({
             'status':status,
-            'date':dateTime 
+            'time':dateTime 
         })
         if(value == 'bật' || value == 'tắt'){
             agent.add(`Đèn 2 đã ${value}`);
@@ -79,7 +79,7 @@ app.post('/',express.json(),(req,res)=>{
         var dateTime = date + ", " + time;
         MyData.child('led3').push({
             'status':status,
-            'date':dateTime 
+            'time':dateTime 
         })
         if(value == 'bật' || value == 'tắt'){
             agent.add(`Đèn 3 đã ${value}`);
@@ -98,7 +98,7 @@ app.post('/',express.json(),(req,res)=>{
         var dateTime = date + ", " + time;
         MyData.child('fan').push({
             'status':status,
-            'date':dateTime 
+            'time':dateTime 
         })
         if(value == 'bật' || value == 'tắt'){
             agent.add(`Quạt đã ${value}`);
