@@ -1,12 +1,14 @@
 const express = require('express');
 const dfff = require('dialogflow-fulfillment');
-const moment = require('moment');
+var moment = require('moment-timezone');
 const firebase = require('firebase');
 const app = express();
 
 app.get('/',(req,res)=>{
     res.send('Hello World!');
 })
+
+var timeZone = moment.tz("Asia/Ho_Chi_Minh");
 
 const firebaseConfig = {
     apiKey: "AIzaSyCV1TXkXu5ZE7CkI-tFSnaH9WPSXv4CFbk",
@@ -23,16 +25,6 @@ firebase.initializeApp(firebaseConfig);
 var MyData = firebase.database().ref('/IOT-DEVICES');
 
 
-const ControlLight2 = (agent)=>{
-
-}
-const ControlLight3 = (agent)=>{
-
-}
-const GetTemperature = (agent)=>{
-
-}
-
 app.post('/',express.json(),(req,res)=>{
     const agent = new dfff.WebhookClient({
         request: req,
@@ -41,66 +33,89 @@ app.post('/',express.json(),(req,res)=>{
     function ControlLight1(agent){
         const value = agent.parameters.status;
         var status = false;
-        if(value == 'on'){
+        if(value == 'on' || value == 'bật'){
             status = true;
         }
-        const date = moment().format("HH:mm:ss, DD/MM/YYYY");
+        var date = timeZone.format("YYYY-MM-DD");
+        var time = timeZone.format("HH:mm:ss");
+        var dateTime = date + ", " + time;
         MyData.child('led1').push({
             'status':status,
-            'date':date
+            'date':dateTime 
         })
-        agent.add(`Light 1 is ${value}`);
+        if(value == 'bật' || value == 'tắt'){
+            agent.add(`Đèn 1 đã ${value}`);
+        }else{
+            agent.add(`Light 1 is ${value}`);
+        }
     }
     function ControlLight2(agent){
         const value = agent.parameters.status;
         var status = false;
-        if(value == 'on'){
+        if(value == 'on' || value == 'bật'){
             status = true;
         }
-        const date = moment().format("HH:mm:ss, DD/MM/YYYY");
+        var date = timeZone.format("YYYY-MM-DD");
+        var time = timeZone.format("HH:mm:ss");
+        var dateTime = date + ", " + time;
         MyData.child('led2').push({
             'status':status,
-            'date':date
+            'date':dateTime 
         })
-        agent.add(`Light 2 is ${value}`);
+        if(value == 'bật' || value == 'tắt'){
+            agent.add(`Đèn 2 đã ${value}`);
+        }else{
+            agent.add(`Light 2 is ${value}`);
+        }
     }
     function ControlLight3(agent){
         const value = agent.parameters.status;
         var status = false;
-        if(value == 'on'){
+        if(value == 'on' || value == 'bật'){
             status = true;
         }
-        const date = moment().format("HH:mm:ss, DD/MM/YYYY");
+        var date = timeZone.format("YYYY-MM-DD");
+        var time = timeZone.format("HH:mm:ss");
+        var dateTime = date + ", " + time;
         MyData.child('led3').push({
             'status':status,
-            'date':date
+            'date':dateTime 
         })
-        agent.add(`Light 3 is ${value}`);
+        if(value == 'bật' || value == 'tắt'){
+            agent.add(`Đèn 3 đã ${value}`);
+        }else{
+            agent.add(`Light 3 is ${value}`);
+        }
     }
     function ControlFan(agent){
         const value = agent.parameters.status;
         var status = false;
-        if(value == 'on'){
+        if(value == 'on' || value == 'bật'){
             status = true;
         }
-        const date = moment().format("HH:mm:ss, DD/MM/YYYY");
+        var date = timeZone.format("YYYY-MM-DD");
+        var time = timeZone.format("HH:mm:ss");
+        var dateTime = date + ", " + time;
         MyData.child('fan').push({
             'status':status,
-            'date':date
+            'date':dateTime 
         })
-        agent.add(`Fan is ${value}`);
+        if(value == 'bật' || value == 'tắt'){
+            agent.add(`Quạt đã ${value}`);
+        }else{
+            agent.add(`Fan is ${value}`);
+        }
     }
-    const getTemp = async()=>{
-        const a = await MyData.child('temp').once('value');
-        console.log(a.val());
-    }
+
     async function GetTemperature(agent){  
+        const value = agent.parameters.devices;
         const temp = await MyData.child('temp').once('value');
-        agent.add(`Weather today is ${temp.val()} degrees C`);
+        if(value == 'weather'){
+            agent.add(`Weather today is ${temp.val()} degrees C`);
+        }else{
+            agent.add(`Nhiệt độ hôm nay là ${temp.val()} độ C`);
+        }   
     }
-
-
-
 
     var interMap = new Map();
     interMap.set('ControlLight1',ControlLight1);
@@ -110,4 +125,5 @@ app.post('/',express.json(),(req,res)=>{
     interMap.set('GetTemperature',GetTemperature);
     agent.handleRequest(interMap);
 })
-app.listen(4000, ()=>console.log('Server on 4000'));
+
+app.listen(process.env.PORT || 4000, ()=>console.log('Server on 4000'));
