@@ -8,7 +8,7 @@ app.get('/',(req,res)=>{
     res.send('Hello World!');
 })
 
-var timeZone = moment.tz("Asia/Ho_Chi_Minh");
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyCV1TXkXu5ZE7CkI-tFSnaH9WPSXv4CFbk",
@@ -36,6 +36,7 @@ app.post('/',express.json(),(req,res)=>{
         if(value == 'on' || value == 'bật'){
             status = true;
         }
+        var timeZone = moment.tz("Asia/Ho_Chi_Minh");
         var date = timeZone.format("YYYY-MM-DD");
         var time = timeZone.format("HH:mm:ss");
         var dateTime = date + ", " + time;
@@ -44,9 +45,9 @@ app.post('/',express.json(),(req,res)=>{
             'time':dateTime 
         })
         if(value == 'bật' || value == 'tắt'){
-            agent.add(`Đèn 1 đã ${value}`);
+            agent.add(`Đèn phòng khách đã được ${value}`);
         }else{
-            agent.add(`Light 1 is ${value}`);
+            agent.add(`The living room is ${value}`);
         }
     }
     function ControlLight2(agent){
@@ -55,6 +56,7 @@ app.post('/',express.json(),(req,res)=>{
         if(value == 'on' || value == 'bật'){
             status = true;
         }
+        var timeZone = moment.tz("Asia/Ho_Chi_Minh");
         var date = timeZone.format("YYYY-MM-DD");
         var time = timeZone.format("HH:mm:ss");
         var dateTime = date + ", " + time;
@@ -63,9 +65,9 @@ app.post('/',express.json(),(req,res)=>{
             'time':dateTime 
         })
         if(value == 'bật' || value == 'tắt'){
-            agent.add(`Đèn 2 đã ${value}`);
+            agent.add(`Đèn phòng ngủ đã được ${value}`);
         }else{
-            agent.add(`Light 2 is ${value}`);
+            agent.add(`The bedroom light is ${value}`);
         }
     }
     function ControlLight3(agent){
@@ -74,6 +76,7 @@ app.post('/',express.json(),(req,res)=>{
         if(value == 'on' || value == 'bật'){
             status = true;
         }
+        var timeZone = moment.tz("Asia/Ho_Chi_Minh");
         var date = timeZone.format("YYYY-MM-DD");
         var time = timeZone.format("HH:mm:ss");
         var dateTime = date + ", " + time;
@@ -82,9 +85,9 @@ app.post('/',express.json(),(req,res)=>{
             'time':dateTime 
         })
         if(value == 'bật' || value == 'tắt'){
-            agent.add(`Đèn 3 đã ${value}`);
+            agent.add(`Đèn phòng bếp đã được ${value}`);
         }else{
-            agent.add(`Light 3 is ${value}`);
+            agent.add(`The kitchen room light is ${value}`);
         }
     }
     function ControlFan(agent){
@@ -93,6 +96,7 @@ app.post('/',express.json(),(req,res)=>{
         if(value == 'on' || value == 'bật'){
             status = true;
         }
+        var timeZone = moment.tz("Asia/Ho_Chi_Minh");
         var date = timeZone.format("YYYY-MM-DD");
         var time = timeZone.format("HH:mm:ss");
         var dateTime = date + ", " + time;
@@ -116,7 +120,7 @@ app.post('/',express.json(),(req,res)=>{
             agent.add(`Nhiệt độ hôm nay là ${temp.val()} độ C`);
         }   
     }
-
+    // https://controlhouse.herokuapp.com/
     var interMap = new Map();
     interMap.set('ControlLight1',ControlLight1);
     interMap.set('ControlLight2',ControlLight2);
